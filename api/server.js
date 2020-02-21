@@ -1,5 +1,7 @@
 const express = require('express');
 
+const jwt = require('jsonwebtoken'); // token 
+
 // const flowerRouter = require('../flowers/flowersRouter.js');
 
 const server = express();
@@ -12,8 +14,22 @@ server.get('/', (req, res) => {
 });
 
 server.get('/token', (req, res) => {
-    
-})
+    const payload = {
+        subject: "testertoken",
+        userid: "token",
+        favoriteflower: "golden mustard garden rose"
+    };
+
+    const secret = "thorns";
+
+    const options = {
+        expiresIn: '1d'
+    };
+
+    const token = jwt.sign(payload, secret, options); 
+
+    res.json(token);
+});
 
 module.exports = server; 
 
